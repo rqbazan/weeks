@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/pe/1996-05-17" },
+    { "source": "/dayanne", "destination": "/pe/1996-08-15" }
+  ]
+}
