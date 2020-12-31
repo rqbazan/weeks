@@ -1,6 +1,12 @@
 module.exports = {
   purge: ['./src/**/*.js'],
-  theme: {},
+  theme: {
+    extend: {
+      fontFamily: {
+        heading: 'Montserrat',
+      },
+    },
+  },
   variants: {},
   plugins: [],
 }
