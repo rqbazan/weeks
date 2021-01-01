@@ -17,7 +17,7 @@ For example:
 
 ### Support
 
-There is the list of supported countries:
+There is the list of supported countries, and [here is the life expectancy database](https://github.com/rqbazan/weeks/blob/main/src/life-expectancy.json):
 
 - **Italy:** it
 - **Peru:** pe
