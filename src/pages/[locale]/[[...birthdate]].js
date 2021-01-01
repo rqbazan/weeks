@@ -1,5 +1,6 @@
 import clsx from 'clsx'
-import differenceInWeeks from 'date-fns/differenceInWeeks'
+import clamp from 'lodash.clamp'
+import differenceInDays from 'date-fns/differenceInDays'
 import parseDate from 'date-fns/parse'
 import db from '~/life-expectancy.json'
 
@@ -17,27 +18,23 @@ function getNthByStep(i, step) {
   return null
 }
 
-function Cell({ borderless = true, colorful, disabled, className, ...props }) {
+function Cell({ borderful, disabled, className, styles, children }) {
   return (
     <span
+      style={styles}
       className={clsx(
         'flex w-4 h-4 text-gray-300 flex-shrink-0 font-mono',
+        borderful && 'border rounded-sm',
         disabled
-          ? [
-              'bg-gray-700 text-gray-600',
-              {
-                'border border-gray-600 rounded-sm': !borderless,
-              },
-            ]
+          ? ['bg-gray-700 text-gray-600', borderful && 'border-gray-600']
           : {
-              'border border-gray-400  rounded-sm': !borderless,
-              'bg-green-300': colorful,
-              'bg-gray-600': !borderless && !colorful,
+              'border-gray-400': borderful,
             },
         className
       )}
-      {...props}
-    />
+    >
+      {children}
+    </span>
   )
 }
 
@@ -75,7 +72,6 @@ export default function IndexPage({
             return (
               <Cell
                 key={`years-${i}`}
-                borderless
                 disabled={i + 1 > lifeExpectancyYears}
                 className={clsx('w-auto items-center justify-end', {
                   'mb-4': isAMultipleOf10,
@@ -114,13 +110,26 @@ export default function IndexPage({
                 {WEEKS_IN_ONE_YEAR.map((_, y) => {
                   const week = WEEKS_IN_ONE_YEAR.length * x + y + 1
 
+                  // percentage of cells that must be paint, from 0 to 1
+                  const c1 = clamp(1 + (userWeeks - week), 0, 1)
+
+                  // percentage of cells that are available to be paint, from 0 to 1
+                  const c2 = clamp(1 + (lifeExpectancyWeeks - week), 0, 1)
+
                   return (
                     <Cell
                       key={`cell-${x}-${y}`}
-                      colorful={week < userWeeks}
-                      disabled={week > lifeExpectancyWeeks}
-                      className={clsx({ 'mr-4': (y + 1) % 4 === 0 })}
-                      borderless={false}
+                      borderful
+                      className={clsx({
+                        'mr-4': (y + 1) % 4 === 0,
+                        '$colorful-cell bg-gray-600': c1 !== 0,
+                        '$available-cell bg-gray-700': c1 === 0 && c2 !== 0,
+                      })}
+                      disabled={c2 === 0}
+                      styles={{
+                        '--c1': `${c1 * 100}%`,
+                        '--c2': `${c2 * 100}%`,
+                      }}
                     />
                   )
                 })}
@@ -143,7 +152,7 @@ export function getServerSideProps({ params }) {
   return {
     props: {
       lifeExpectancyYears,
-      userWeeks: isValidDate ? differenceInWeeks(new Date(), rightDate) : 0,
+      userWeeks: isValidDate ? differenceInDays(new Date(), rightDate) / 7 : 0,
       lifeExpectancyWeeks: lifeExpectancyYears * WEEKS_IN_ONE_YEAR.length,
     },
   }

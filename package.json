@@ -13,6 +13,7 @@
     "autoprefixer": "^10.1.0",
     "clsx": "^1.1.1",
     "date-fns": "^2.16.1",
+    "lodash.clamp": "^4.0.3",
     "next": "^10.0.4",
     "postcss": "^8.2.2",
     "postcss-nested": "^5.0.3",

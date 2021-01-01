@@ -3,3 +3,21 @@
 body {
   @apply bg-gray-700;
 }
+
+.\$colorful-cell {
+  background: linear-gradient(
+    90deg,
+    theme('colors.green.300') 0%,
+    theme('colors.green.300') var(--c1),
+    rgba(255, 255, 255, 0) var(--c1)
+  );
+}
+
+.\$available-cell {
+  background: linear-gradient(
+    90deg,
+    theme('colors.gray.600') 0%,
+    theme('colors.gray.600') var(--c2),
+    rgba(255, 255, 255, 0) var(--c2)
+  );
+}
