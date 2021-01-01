@@ -1,12 +1,12 @@
 import clsx from 'clsx'
 import clamp from 'lodash.clamp'
-import differenceInDays from 'date-fns/differenceInDays'
-import parseDate from 'date-fns/parse'
 import db from '~/life-expectancy.json'
 
 const WEEKS_IN_ONE_YEAR = Array.from({ length: 52 })
 
 const LIFE_IN_YEARS = Array.from({ length: 100 })
+
+const ONE_WEEK_IN_MS = 6048e5
 
 function getNthByStep(i, step) {
   const nth = i + 1
@@ -143,16 +143,18 @@ export default function IndexPage({
 }
 
 export function getServerSideProps({ params }) {
-  const rightDate = parseDate(params.birthdate?.[0], 'yyyy-MM-dd', new Date())
+  const birthdate = Date.parse(params.birthdate)
 
-  const isValidDate = !Number.isNaN(rightDate.getTime())
+  const lifeExpectancyYears = db[params.country] ?? LIFE_IN_YEARS.length
 
-  const lifeExpectancyYears = db[params.locale] ?? LIFE_IN_YEARS.length
+  const userWeeks = !Number.isNaN(birthdate)
+    ? (Date.now() - birthdate) / ONE_WEEK_IN_MS
+    : 0
 
   return {
     props: {
       lifeExpectancyYears,
-      userWeeks: isValidDate ? differenceInDays(new Date(), rightDate) / 7 : 0, // Ref: https://bit.ly/38UaTwC
+      userWeeks,
       lifeExpectancyWeeks: lifeExpectancyYears * WEEKS_IN_ONE_YEAR.length,
     },
   }
