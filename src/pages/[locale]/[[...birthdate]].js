@@ -49,12 +49,9 @@ function Stat({ value, title }) {
 
 export default function IndexPage({
   userWeeks,
-  userDays,
   lifeExpectancyWeeks,
   lifeExpectancyYears,
 }) {
-  console.log({ userDays })
-
   return (
     <div className="md:max-w-7xl md:ml-auto md:mr-auto">
       <header className="flex justify-center items-center py-4 md:py-8 text-2xl md:text-4xl">
@@ -152,14 +149,10 @@ export function getServerSideProps({ params }) {
 
   const lifeExpectancyYears = db[params.locale] ?? LIFE_IN_YEARS.length
 
-  // Ref: https://bit.ly/38UaTwC
-  const userDays = differenceInDays(new Date(), rightDate)
-
   return {
     props: {
       lifeExpectancyYears,
-      userDays,
-      userWeeks: isValidDate ? userDays / 7 : 0,
+      userWeeks: isValidDate ? differenceInDays(new Date(), rightDate) / 7 : 0, // Ref: https://bit.ly/38UaTwC
       lifeExpectancyWeeks: lifeExpectancyYears * WEEKS_IN_ONE_YEAR.length,
     },
   }
