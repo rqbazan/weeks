@@ -152,7 +152,7 @@ export function getServerSideProps({ params }) {
   return {
     props: {
       lifeExpectancyYears,
-      userWeeks: isValidDate ? differenceInDays(new Date(), rightDate) / 7 : 0,
+      userWeeks: isValidDate ? differenceInDays(new Date(), rightDate) / 7 : 0, // Ref: https://bit.ly/38UaTwC
       lifeExpectancyWeeks: lifeExpectancyYears * WEEKS_IN_ONE_YEAR.length,
     },
   }
