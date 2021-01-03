@@ -82,7 +82,7 @@ export default function IndexPage({
                   key={`years-${i}`}
                   disabled={i + 1 > lifeExpectancyYears}
                   className={clsx('w-auto items-center justify-end', {
-                    'mb-4': isAMultipleOf10,
+                    'mb-4': isAMultipleOf10 && i !== LIFE_IN_YEARS.length - 1,
                     'mb-1': !isAMultipleOf10,
                   })}
                 >
@@ -97,7 +97,8 @@ export default function IndexPage({
                 <Cell
                   key={`header-${i}`}
                   className={clsx('items-center justify-end', {
-                    'mr-4': (i + 1) % 4 === 0,
+                    'mr-4':
+                      (i + 1) % 4 === 0 && i !== WEEKS_IN_ONE_YEAR.length - 1,
                   })}
                 >
                   {getNthByStep(i, 4)}
@@ -129,9 +130,11 @@ export default function IndexPage({
                         key={`cell-${x}-${y}`}
                         borderful
                         className={clsx({
-                          'mr-4': (y + 1) % 4 === 0,
                           '$colorful-cell bg-gray-600': c1 !== 0,
                           '$available-cell bg-gray-700': c1 === 0 && c2 !== 0,
+                          'mr-4':
+                            (y + 1) % 4 === 0 &&
+                            y !== WEEKS_IN_ONE_YEAR.length - 1,
                         })}
                         disabled={c2 === 0}
                         styles={{
