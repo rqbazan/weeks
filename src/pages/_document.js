@@ -24,6 +24,7 @@ class Document extends NextDocument {
           sizes="16x16"
           href="/favicon-16x16.png"
         />
+        <script src="https://unpkg.com/sync-scroll@1.0.3" />
         <body>
           <Main />
           <NextScript />

@@ -21,3 +21,24 @@ body {
     rgba(255, 255, 255, 0) var(--c2)
   );
 }
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-400;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-500;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-700;
+}
+
+.\$hidden-scrollbar::-webkit-scrollbar {
+  display: none;
+}
