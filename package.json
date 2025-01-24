@@ -1,23 +1,26 @@
 {
   "name": "weeks",
   "version": "1.0.0",
-  "main": "index.js",
+  "private": true,
+  "type": "module",
   "author": "Ricardo Alexis Quiroz Bazan",
   "license": "MIT",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "dev": "next dev",
     "start": "next start",
     "build": "next build"
   },
   "dependencies": {
-    "autoprefixer": "^10.1.0",
-    "clsx": "^1.1.1",
-    "lodash.clamp": "^4.0.3",
-    "next": "^10.0.4",
-    "postcss": "^8.2.2",
-    "postcss-nested": "^5.0.3",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "tailwindcss": "^2.0.2"
+    "@tailwindcss/postcss": "^4.0.0",
+    "clsx": "2.1.1",
+    "lodash.clamp": "4.0.3",
+    "next": "15.1.6",
+    "postcss": "8.5.1",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "tailwindcss": "4.0.0"
   }
 }
