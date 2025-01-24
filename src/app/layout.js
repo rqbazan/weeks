@@ -1,12 +1,16 @@
-import NextDocument, { Html, Head, Main, NextScript } from 'next/document'
+import "./globals.css";
+import { Montserrat } from "next/font/google";
 
-class Document extends NextDocument {
-  static getInitialProps = NextDocument.getInitialProps
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: "800",
+  display: "swap",
+});
 
-  render() {
-    return (
-      <Html>
-        <Head />
+export default function AppLayout({ children }) {
+  return (
+    <html lang="en">
+      <head>
         <link
           rel="apple-touch-icon"
           sizes="180x180"
@@ -25,13 +29,9 @@ class Document extends NextDocument {
           href="/favicon-16x16.png"
         />
         <script src="https://unpkg.com/sync-scroll@1.0.3" />
-        <body>
-          <Main />
-          <NextScript />
-        </body>
-      </Html>
-    )
-  }
+        <title>My life in weeks</title>
+      </head>
+      <body className={montserrat.className}>{children}</body>
+    </html>
+  );
 }
-
-export default Document
